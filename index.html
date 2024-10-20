@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr" >
+<head>
+    <meta charset="UTF-8">
+    <title>Magasin</title>
+</head>
+<body>
+
+    <!--
+    Nous avons trois section sur cette page 1- Magasin 2- formulaire ajout -3 personage
+    -->
+    <!-- Magasin tableau -->
+    <section>
+        <h1>Magasin</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="row">Objet</th>
+                    <th scope="row">Puissance offensive</th>
+                    <th scope="row">Puissance défensive</th>
+                    <th scope="row">Coût</th>
+                    <th scope="row">Achat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Gros marteau</td>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>50 00$</td>
+                    <td><input type="checkbox" id="item1"></td>
+                </tr>
+                <tr>
+                    <td>Casque cornu</td>
+                    <td>70</td>
+                    <td>5</td>
+                    <td>90 00$</td>
+                    <td><input type="checkbox" id="item2"></td>
+                </tr>
+                <tr>
+                    <td>Pantoufles discrètes</td>
+                    <td>67</td>
+                    <td>8</td>
+                    <td>40 00$</td>
+                    <td><input type="checkbox" id="item3"></td>
+                </tr>
+                <tr>
+                    <td>Sabre laser</td>
+                    <td>8</td>
+                    <td>90</td>
+                    <td>60 00$</td>
+                    <td><input type="checkbox" id="item4"></td>
+                </tr>
+                <tr>
+                    <td>Plastron de receveur</td>
+                    <td>0</td>
+                    <td>50</td>
+                    <td>20 00$</td>
+                    <td><input type="checkbox" id="item5"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p>Merci de votre achat <button id="btnAchat">Acheter</button></p>
+        </div>
+    </section>
+    <!-- Formulaire ajout -->
+    <section>
+        <form action="" method="get">
+            <h2>Ajouter un objet au magasin</h2>
+            <div>
+                <label for="nomObjet">Nom : </label>
+                <input type="text" id="nomObjet" name="Nom">
+            </div>
+            <div>
+                <label for="pOffensive">Puissance Offensive : </label>
+                <input type="number" id="pOffensive" name="Puissance Offensive">
+            </div>
+            <div>
+                <label for="pDefensive">Puissance défensive : </label>
+                <input type="number" id="pDefensive" name="Puissance défensive">
+            </div>
+            <div>
+                <label for="cout">Coût : </label>
+                <input type="" id="cout" name="Cout">
+            </div>
+            <div>
+                <button type="submit" id="btnAjouter">Ajouter</button>
+                <button type="reset" id="btnAnnuler">Annuler</button>
+            </div>
+        </form>
+    </section>
+    <!-- Personnage fonction comme la carte -->
+    <section>
+        <h2>Personnages</h2>
+        <select name="Personnages" id="lesPersonnages">
+            <option value="person1">Jacque le pirate</option>
+            <option value="person2">Luffy</option>
+        </select>
+        <div id=affichePerson>
+            <div id="attaquePerson"> Attaque : <emp id="totalAttaque"></emp></div>
+            <div id="defensePerson"> Défense : <emp id="totalDefensive"></emp></div>
+            <div id="argentPerson"> Argent : <emp id="totalArgent">$</emp></div>
+        </div>
+    </section>
+
+
+</body>
+</html>
