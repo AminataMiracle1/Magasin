@@ -1,0 +1,77 @@
+/*
+Note : quand on fait les style d'une page c'est du plus large au plus pointu que
+nous devons
+
+- style generale : body
+partager les sections
+ */
+body{
+    font-family: sans-serif Arial;
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+/*
+Le tableau
+ */
+table{
+    width: 50%;
+    border-collapse: collapse;
+    border: solid black 2px;
+    text-align: center;
+}
+th {
+    border-collapse: collapse;
+    border: solid black 2px;
+    padding: 1em;
+    background-color: green;
+    color : white;
+}
+
+td{
+    border-collapse: collapse;
+    border: solid black 2px;
+    padding: 0.5em;
+}
+tr:nth-child(even){
+    background-color: green;
+    color: white;
+}
+
+/*
+Formulaire
+ */
+form{
+    width: 40%;
+    border:solid green 2px;
+    border-radius: 10px;
+    background-color: green;
+    color: white;
+}
+
+label  {
+    width: 40%;
+    text-align: left;
+
+}
+
+.groupInput{
+    margin: 1em;
+}
+.groupBtn{
+    text-align: center;
+    margin: 1em;
+}
+
+/*
+Section Personnage
+ */
+
+.sectionPerson{
+    float: right;
+    margin-right: 50px;
+}

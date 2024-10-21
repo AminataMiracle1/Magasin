@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Magasin</title>
+    <link rel="stylesheet" href="styleMagasin.css">
 </head>
 <body>
 
     <!--
     Nous avons trois section sur cette page 1- Magasin 2- formulaire ajout -3 personage
     -->
+    <!-- Personnage fonction comme la carte -->
+    <section class="sectionPerson">
+        <h2>Personnages</h2>
+        <select name="Personnages" id="lesPersonnages">
+            <option value="person1">Jacque le pirate</option>
+            <option value="person2">Luffy</option>
+        </select>
+        <div id=affichePerson>
+            <div id="attaquePerson"> Attaque : <emp id="totalAttaque"></emp></div>
+            <div id="defensePerson"> Défense : <emp id="totalDefensive"></emp></div>
+            <div id="argentPerson"> Argent : <emp id="totalArgent">$</emp></div>
+        </div>
+        <div id="ImagePerson"><img src="" alt=""></div>
+    </section>
     <!-- Magasin tableau -->
     <section>
         <h1>Magasin</h1>
@@ -68,41 +83,29 @@
     <section>
         <form action="" method="get">
             <h2>Ajouter un objet au magasin</h2>
-            <div>
+            <div class="groupInput">
                 <label for="nomObjet">Nom : </label>
                 <input type="text" id="nomObjet" name="Nom">
             </div>
-            <div>
+            <div class="groupInput">
                 <label for="pOffensive">Puissance Offensive : </label>
                 <input type="number" id="pOffensive" name="Puissance Offensive">
             </div>
-            <div>
-                <label for="pDefensive">Puissance défensive : </label>
+            <div class="groupInput">
+                <label for="pDefensive" >Puissance défensive : </label>
                 <input type="number" id="pDefensive" name="Puissance défensive">
             </div>
-            <div>
-                <label for="cout">Coût : </label>
-                <input type="" id="cout" name="Cout">
+            <div class="groupInput">
+                <label for="cout" >Coût : </label>
+                <input type="number" id="cout" name="Cout">
             </div>
-            <div>
+            <div class="groupBtn">
                 <button type="submit" id="btnAjouter">Ajouter</button>
                 <button type="reset" id="btnAnnuler">Annuler</button>
             </div>
         </form>
     </section>
-    <!-- Personnage fonction comme la carte -->
-    <section>
-        <h2>Personnages</h2>
-        <select name="Personnages" id="lesPersonnages">
-            <option value="person1">Jacque le pirate</option>
-            <option value="person2">Luffy</option>
-        </select>
-        <div id=affichePerson>
-            <div id="attaquePerson"> Attaque : <emp id="totalAttaque"></emp></div>
-            <div id="defensePerson"> Défense : <emp id="totalDefensive"></emp></div>
-            <div id="argentPerson"> Argent : <emp id="totalArgent">$</emp></div>
-        </div>
-    </section>
+
 
 
 </body>
