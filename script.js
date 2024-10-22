@@ -55,7 +55,7 @@ function ObjetMagasin(nomObjet = "", puissanObjet = "", defenseObjet = "", cout=
     this.nom = nomObjet;
     this.puissanObjet = puissanObjet;
     this.defenseObjet = defenseObjet;
-    this.cout = cout;
+    this.cout = parseFloat(cout);
 }
 // Créer  un objet Magasin et l'afficher.
 let objetMagasin1 = new ObjetMagasin("GrosMarteau", "67", "60", 5000)
@@ -143,7 +143,63 @@ btnAnnuler.addEventListener("click", function () {
 
 
 /*
-La Methode Acheter : elle fonctionn
+La Methode Acheter: les point à traiter
+un objet personne acheter un objet Magasin.
+Algorithme :
+Requirement :
+avoir de l'argent : verifier s'il a assez d'argent
+personne peu acheter plusieur objet tant qu'il a de l'argent.
+
+comportement attendu Magasin :
+-  Quand on achet : l'objet disparait
+- des messages aleotoire s'affiche
  */
+
+btnAchater.addEventListener("click", function () {
+    const selectedCharacter = document.getElementById("lesPersonnages").value;
+    let currentCharacter;
+
+    // Determine which character is selected
+    if (selectedCharacter === "personJack") {
+        currentCharacter = person1;
+    } else if (selectedCharacter === "personLuffy") {
+        currentCharacter = person2;
+    }
+
+    let totalCost = 0;
+
+    // Loop through the checkboxes to calculate total cost
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            const item = listesObjetMag[index];
+            totalCost += item.cout; // Update the cost based on selected items
+        }
+    });
+
+    // Check if the character has enough money
+    if (currentCharacter.argent >= totalCost) {
+        // Deduct the total cost from the character's money
+        currentCharacter.argent -= totalCost;
+
+        // Remove purchased items from the store
+        checkboxes.forEach((checkbox, index) => {
+            if (checkbox.checked) {
+                listesObjetMag.splice(index, 1);
+                checkbox.checked = false; // Uncheck the box
+            }
+        });
+
+        // Refresh the display of items in the store
+        afficheTableau();
+
+        // Update the character's attributes
+        currentCharacter.afficheAttribut();
+
+        alert("Achat réussi !");
+    } else {
+        alert("Fonds insuffisants !");
+    }
+});
 
 
