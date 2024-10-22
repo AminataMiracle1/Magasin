@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Magasin</title>
     <link rel="stylesheet" href="styleMagasin.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
@@ -40,35 +41,35 @@
             <tbody>
                 <tr>
                     <td>Gros marteau</td>
-                    <td>10</td>
-                    <td>5</td>
+                    <td>50</td>
+                    <td>60</td>
                     <td>50 00$</td>
                     <td><input type="checkbox" id="item1"></td>
                 </tr>
                 <tr>
                     <td>Casque cornu</td>
                     <td>70</td>
-                    <td>5</td>
+                    <td>55</td>
                     <td>90 00$</td>
                     <td><input type="checkbox" id="item2"></td>
                 </tr>
                 <tr>
                     <td>Pantoufles discrètes</td>
                     <td>67</td>
-                    <td>8</td>
+                    <td>88</td>
                     <td>40 00$</td>
                     <td><input type="checkbox" id="item3"></td>
                 </tr>
                 <tr>
                     <td>Sabre laser</td>
-                    <td>8</td>
+                    <td>78</td>
                     <td>90</td>
                     <td>60 00$</td>
                     <td><input type="checkbox" id="item4"></td>
                 </tr>
                 <tr>
                     <td>Plastron de receveur</td>
-                    <td>0</td>
+                    <td>90</td>
                     <td>50</td>
                     <td>20 00$</td>
                     <td><input type="checkbox" id="item5"></td>
@@ -81,23 +82,23 @@
     </section>
     <!-- Formulaire ajout -->
     <section>
-        <form action="" method="get">
+        <form action="" method="GET">
             <h2>Ajouter un objet au magasin</h2>
             <div class="groupInput">
                 <label for="nomObjet">Nom : </label>
-                <input type="text" id="nomObjet" name="Nom">
+                <input type="text" id="nomObjet" name="Nom" minlength="3" maxlength="30" required>
             </div>
             <div class="groupInput">
                 <label for="pOffensive">Puissance Offensive : </label>
-                <input type="number" id="pOffensive" name="Puissance Offensive">
+                <input type="number" id="pOffensive" name="Puissance Offensive" min="50" max="100" placeholder="min 50 max 100" required>
             </div>
             <div class="groupInput">
                 <label for="pDefensive" >Puissance défensive : </label>
-                <input type="number" id="pDefensive" name="Puissance défensive">
+                <input type="number" id="pDefensive" name="Puissance défensive"  min="50" max="100" placeholder="min 50 max 100" required >
             </div>
             <div class="groupInput">
                 <label for="cout" >Coût : </label>
-                <input type="number" id="cout" name="Cout">
+                <input type="number" id="cout" name="Cout"  min="0">
             </div>
             <div class="groupBtn">
                 <button type="submit" id="btnAjouter">Ajouter</button>
@@ -105,8 +106,6 @@
             </div>
         </form>
     </section>
-
-
 
 </body>
 </html>
