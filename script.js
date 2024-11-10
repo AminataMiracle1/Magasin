@@ -1,7 +1,7 @@
 // Initions les variable constante :
-const btnAjouterObj = document.getElementById("btnAjouter")
-const btnAnnuler = document.getElementById("btnAnnuler")
-const btnAchater = document.getElementById("btnAchat")
+const btnAjouterObj = $("#btnAjouter")
+const btnAnnuler = $("#btnAnnuler")
+const btnAchater = $("#btnAchater")
 
 // Créer une liste personnages
 let listsPersonnages= []
@@ -36,13 +36,13 @@ listsPersonnages.push(person1)
 listsPersonnages.push(person2)
 
 // afficher les attribut du personnage.
-document.getElementById("lesPersonnages").addEventListener("click", () => {
+$("#lesPersonnages").click(() => {
     // Condition qui affiche les personne dans le bon endroit.
 
-    if (document.getElementById("lesPersonnages").value === "personJack"){
+    if ($("#lesPersonnages").val() === "personJack"){
         person1.afficheAttribut();
 
-    }else if(document.getElementById("lesPersonnages").value === "personLuffy"){
+    }else if($("#lesPersonnages").val() === "personLuffy"){
         person2.afficheAttribut();
     }
 
@@ -104,7 +104,7 @@ Maintenant appeller la fonction Afficher tableau qui parcours la listes pour les
 
 
 // Gestion d'événement du bouton "Ajouter"
-btnAjouterObj.addEventListener("click", function (event) {
+btnAjouterObj.click(function (event) {
     event.preventDefault(); // Empêcher le rechargement de la page
 
     // Récupérer les valeurs du formulaire
