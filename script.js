@@ -58,11 +58,11 @@ function ObjetMagasin(nomObjet = "", puissanObjet = "", defenseObjet = "", cout=
     this.cout = parseFloat(cout);
 }
 // Créer  un objet Magasin et l'afficher.
-let objetMagasin1 = new ObjetMagasin("GrosMarteau", "67", "60", 5000)
-let objetMag2 = new ObjetMagasin("Casque", "70", "55", 6700)
+let objetMag1 = new ObjetMagasin("GrosMarteau", "67", "60", 50)
+let objetMag2 = new ObjetMagasin("Casque", "70", "55", 67)
 
 // Ajouter les objet dans la listes
-listesObjetMag.push(objetMagasin1)
+listesObjetMag.push(objetMag1)
 listesObjetMag.push(objetMag2)
 
 // Creer une fonction  qui affiche le tableau :
@@ -137,9 +137,9 @@ btnAjouterObj.click(function (event) {
 
 
 // Gestion d'événement du bouton "Annuler" pour réinitialiser les champs
-btnAnnuler.addEventListener("click", function () {
+/*btnAnnuler.addEventListener("click", function () {
     document.querySelector("form").reset();
-});
+});*/
 
 
 /*
