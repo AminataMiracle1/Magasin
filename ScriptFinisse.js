@@ -3,18 +3,14 @@
  * Afficher le tableau avec du Jquerry
  * Le tableau contient du objets.
  */
-listesObjetMag = []
-function ObjetMagasin(nomObjet = "", puissanObjet = "", defenseObjet = "", cout= 0) {
-    this.nom = nomObjet;
-    this.puissanObjet = puissanObjet;
-    this.defenseObjet = defenseObjet;
-    this.cout = cout
-    this
-    // Une fonction qui affiche les objets du magasin.
-    function afficheTableau(){
+function Magasin (){
+    this.listesObjetMag = []
+    this.afficheObjet = function (){
+
         // Récupere le tableau
-        const $tableauBody = $("table body");
-        listesObjetMag.forEach(objet =>{
+        const $tableauBody = $("table tbody");
+        for(let objet of this.listesObjetMag){
+            console.log(objet.nom)
             // Ajouter une nouvelle ligne du tableau
             const $nouvelLigne = $("<tr></tr>")
             const $cel0 = $("<td></td>")
@@ -27,7 +23,7 @@ function ObjetMagasin(nomObjet = "", puissanObjet = "", defenseObjet = "", cout=
             $cel0.text(objet.nom);
             $cel1.text(objet.puissanObjet);
             $cel2.text(objet.defenseObjet);
-            $cel3.text(`${objet.cout.toFixed(2)}$`);
+            $cel3.text(`${objet.cout.toFixed(2) + "$"}`);
 
             // Ajouter la cellule checkbox
             const $checkbox = $("<input>").attr("type", "checkbox");
@@ -36,17 +32,51 @@ function ObjetMagasin(nomObjet = "", puissanObjet = "", defenseObjet = "", cout=
             // Ajouter la nouvelle ligne complètement au tableau
             $nouvelLigne.append($cel0, $cel1, $cel2, $cel3, $cel4);
             $tableauBody.append($nouvelLigne);
-        })
+
+            console.log("Nouvelle", $nouvelLigne);
+        }
     }
 }
-listesObjetMag = []
-let objetMag1 = new ObjetMagasin("GrosMarteau", "67", "60", 50)
-let objetMag2 = new ObjetMagasin("Casque", "70", "55", 67)
+// Créer un objet est c'est description
+function Objet(nomObjet = "", puissanObjet = "", defenseObjet = "", cout= 0) {
+    this.nom = nomObjet;
+    this.puissanObjet = puissanObjet;
+    this.defenseObjet = defenseObjet;
+    this.cout = cout
+}
 
-listesObjetMag.push(objetMag1)
-listesObjetMag.push(objetMag2)
+// Instancier des objet
+let objetMag1 = new Objet("GrosMarteau", "67", "60", 50)
+let objetMag2 = new Objet("Casque", "70", "55", 67)
 
-objetMag1.afficheTableau()
+// Instancier un Magasin
+let magasin = new Magasin();
+
+// Ajouter des objet dans magasin
+magasin.listesObjetMag.push(objetMag1, objetMag2)
+
+console.log(magasin.listesObjetMag)
+// Afficher les objet du magasin
+magasin.afficheObjet()
+
+function ajouterObjet (){
+    // Récupere les valeurs du formulaire.
+    let $nom = $("#nomObjet").val();
+    let $pOffensive = $("#pOffensive").val();
+    let $pDefensive = $("#pDefensive").val();
+    let $cout = $("#cout").val();
+    // Crééer  un objet
+    const objet  = new Objet($nom, $pOffensive, $pDefensive, $cout)
+    // Ajouter l'objet dans la listes des objets du Magasin
+    magasin.listesObjetMag.push(objet)
+
+    console.log(magasin.listesObjetMag)
+    magasin.afficheObjet()
+
+}
+
+// gestion d'événement du btn Ajouter
+$("#btnAjouter").on("click", ajouterObjet)
 
 
 
