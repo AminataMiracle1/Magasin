@@ -1,96 +1,128 @@
-/**
- * La partie du tableau
- * Afficher le tableau avec du Jquerry
- * Le tableau contient du objets.
- */
-function Magasin (){
-    this.listesObjetMag = []
-    this.afficheObjet = function (){
-        // Récupere le tableau
+function Magasin() {
+    this.listesObjetMag = [];
+    /**
+     * Afficher les objets du magasin
+     */
+    this.afficheObjet = function () {
+        // Récupère le tableau
         const $tableauBody = $("table tbody");
-        $tableauBody.empty(); // On vide le tableau phusique alors cela n'a pas n'impact sur la liste
-        for(let objet of this.listesObjetMag){
-            // Ajouter une nouvelle ligne du tableau
-            const $nouvelLigne = $("<tr></tr>")
-            const $cel0 = $("<td></td>")
-            const $cel1 = $("<td></td>")
-            const $cel2 = $("<td></td>")
-            const $cel3 = $("<td></td>")
-            const $cel4 = $("<td></td>")
+        $tableauBody.empty();  // On vide le tableau physique
 
-            // Mettre les éléments dans les cellules.
-            $cel0.text(objet.nom);
-            $cel1.text(objet.puissanObjet);
-            $cel2.text(objet.defenseObjet);
-            $cel3.text(`${objet.cout.toFixed(2) + "$"}`);
+        // Ajouter chaque objet du magasin dans le tableau
+        for (let objet of this.listesObjetMag) {
+            // Créer une nouvelle ligne dans le tableau
+            const $nouvelleLigne = $("<tr></tr>");
+            const $cel0 = $("<td></td>").text(objet.nom);
+            const $cel1 = $("<td></td>").text(objet.puissanObjet);
+            const $cel2 = $("<td></td>").text(objet.defenseObjet);
+            const $cel3 = $("<td></td>").text(`${objet.cout.toFixed(2)} $`);
 
             // Ajouter la cellule checkbox
             const $checkbox = $("<input>").attr("type", "checkbox");
-            $cel4.append($checkbox);
+            const $cel4 = $("<td></td>").append($checkbox);
 
-            // Ajouter la nouvelle ligne complètement au tableau
-            $nouvelLigne.append($cel0, $cel1, $cel2, $cel3, $cel4);
-            $tableauBody.append($nouvelLigne);
+            // Ajouter la nouvelle ligne au tableau
+            $nouvelleLigne.append($cel0, $cel1, $cel2, $cel3, $cel4);
+            $tableauBody.append($nouvelleLigne);
         }
-    }
+    };
+
+    /**
+     * Ajouter un objet au magasin
+     */
+    this.ajouterObjet = function () {
+        // Récupère les valeurs du formulaire
+        let $nom = $("#nomObjet").val();
+        let $pOffensive = $("#pOffensive").val();
+        let $pDefensive = $("#pDefensive").val();
+        let $cout = parseFloat($("#cout").val()).toFixed(2);
+
+        // Vérification simple des champs (validez les données ici)
+        if ($nom.length < 3) {
+            alert("Le nom doit être supérieur à 3 caractères.");
+            return;
+        }
+        if ($pOffensive < 50 || $pOffensive > 100) {
+            alert("La puissance offensive doit être entre 50 et 100.");
+            return;
+        }
+        if ($pDefensive < 50 || $pDefensive > 100) {
+            alert("La puissance défensive doit être entre 50 et 100.");
+            return;
+        }
+        if ($cout <= 0) {
+            alert("Le prix doit être supérieur à 0 $.");
+            return;
+        }
+
+        // Crée un nouvel objet
+        let objet = new Objet($nom, $pOffensive, $pDefensive, $cout);
+
+        // Ajoute l'objet à la liste du magasin
+        this.listesObjetMag.push(objet);
+
+        console.log("Liste des objets :", this.listesObjetMag);
+
+        // Affiche les objets mis à jour
+        this.afficheObjet();
+    };
 }
-// Créer un objet est c'est description
-function Objet(nomObjet = "", puissanObjet = "", defenseObjet = "", cout= 0) {
+
+/**
+ * l'objet des magasin
+ * @param nomObjet
+ * @param puissanObjet
+ * @param defenseObjet
+ * @param cout
+ * @constructor
+ */
+// Crée un objet avec ses propriétés
+function ObjetMag(nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0) {
     this.nom = nomObjet;
     this.puissanObjet = puissanObjet;
     this.defenseObjet = defenseObjet;
-    this.cout = cout
+    this.cout = parseFloat(cout);
 }
 
-// Instancier des objet
-let objetMag1 = new Objet("GrosMarteau", "67", "60", 50)
-let objetMag2 = new Objet("Casque", "70", "55", 67)
+/**
+ * Classe personnages
+ * @param nom
+ * @param attaque
+ * @param defense
+ * @param argent
+ * @param image
+ * @constructor
+ */
+function Personnage(nom, attaque, defense, argent, image){
+    this.nomPer = nom;
+    this.attaquePer = attaque;
+    this.defensePer = defense;
+    this.argentPer = parseFloat(argent);
+    this.imagePer = image;
+}
 
-// Instancier un Magasin
+/*************************************************************
+ *  Main de l'application
+ *  **********************************************************
+ */
+// Instancier des objets
+let objetMag1 = new ObjetMag("GrosMarteau", "67", "60", 78);
+let objetMag2 = new ObjetMag("Casque", "70", "55", 67);
+
+// Instancier un magasin
 let magasin = new Magasin();
 
-// Ajouter des objet dans magasin
-magasin.listesObjetMag.push(objetMag1, objetMag2)
+//Instancier Personnages :
+let person1 = new Personnage("Jacques le prirate", "12", "5", 350, "img/jack.png");
+let person2 = new Personnage("Luffy", "45", "80", 30000, "img/luffy.png");
 
-console.log(magasin.listesObjetMag)
-// Afficher les objet du magasin
-magasin.afficheObjet()
+// Ajouter des objets au magasin
+magasin.listesObjetMag.push(objetMag1, objetMag2);
 
+// Afficher les objets du magasin
+magasin.afficheObjet();
 
-function ajouterObjet (){
-    // Récupere les valeurs du formulaire.
-    let $nom = $("#nomObjet").val();
-    let $pOffensive = $("#pOffensive").val();
-    let $pDefensive = $("#pDefensive").val();
-    let $cout = parseFloat($("#cout").val());
-
-
-    // Vérifier si les champs sont remplis
-    if (($nom.length) < 3 )
-        // TODO : Utiliser Bootstrap  Ou Css pour afficher les erreur
-        alert("Nom doit être superiere à 3 lettre");
-    else if ($pOffensive < 50 && $pOffensive > 100){
-        // TODO : Utiliser Bootstrap  Ou Css pour afficher les erreur
-        alert("La puissance offensive doit être plus de 50 et inferière à 100");
-    }else if ($pDefensive < 50 && $pDefensive > 100){
-        // TODO : Utiliser Bootstrap  Ou Css pour afficher les erreur
-        alert("La puissance Defensive doit être plus de 50 et inferière à 100");
-    } else if (isNaN($cout) || $cout <= 0) {
-        alert("Le prix doit être un nombre supérieur à 0$");
-    } else {
-        // Crééer  un objet
-        let objet  = new Objet($nom, $pOffensive, $pDefensive, $cout   )
-
-        // Ajouter l'objet dans la listes des objets du Magasin
-        magasin.listesObjetMag.push(objet)
-
-        console.log("La listes des objets ", magasin.listesObjetMag)
-        magasin.afficheObjet()
-    }
-}
-
-// gestion d'événement du btn Ajouter
-$("#btnAjouter").on("click", ajouterObjet)
-
-
-
+// Gestion de l'événement pour le bouton Ajouter
+$("#btnAjouter").on("click", function () {
+    magasin.ajouterObjet();  // Appelle la méthode pour ajouter un objet
+});
