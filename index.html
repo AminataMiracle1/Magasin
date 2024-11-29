@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Magasin</title>
     <link rel="stylesheet" href="styleMagasin.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-   <!-- <script src="script.js" defer></script> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <!--<script src="script.js" defer></script>-->
     <script src="ScriptFinisse.js" defer></script>
 </head>
 <body>
@@ -17,14 +18,14 @@
     <section class="sectionPerson">
         <h2>Personnages</h2>
         <select name="Personnages" id="lesPersonnages">
-            <!-- Cette partie la remplacer avec du JQuery-->
             <option value="personJack" >Jacque le pirate</option>
             <option value="personLuffy">Luffy</option>
         </select>
         <div id=affichePerson>
-            <div id="attaquePerson"> Attaque : <emp id="totalAttaque"></emp></div>
-            <div id="defensePerson"> Défense : <emp id="totalDefensive"></emp></div>
-            <div id="argentPerson"> Argent   : <emp id="totalArgent">$</emp></div>
+            <div id="attaquePerson"> Attaque : <span id="totalAttaque"></span></div>
+            <div id="defensePerson"> Défense : <span id="totalDefensive"></span></div>
+            <div id="argentPerson"> Argent   : <span id="totalArgent">$</span></div>
+            <img src="" alt="">
         </div>
         <div id="ImagePerson"><img src="" alt=""></div>
     </section>
@@ -42,7 +43,6 @@
                 </tr>
             </thead>
             <tbody>
-            <!-- Mettre le contenu de la page -->
             </tbody>
         </table>
         <div>

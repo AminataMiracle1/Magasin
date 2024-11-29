@@ -1,3 +1,18 @@
+/**
+ * l'objet des magasin
+ * @param nomObjet
+ * @param puissanObjet
+ * @param defenseObjet
+ * @param cout
+ * @constructor
+ */
+// Crée un objet avec ses propriétés
+function ObjetMag(nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0) {
+    this.nom = nomObjet;
+    this.puissanObjet = puissanObjet;
+    this.defenseObjet = defenseObjet;
+    this.cout = parseFloat(cout);
+}
 function Magasin() {
     this.listesObjetMag = [];
     /**
@@ -54,9 +69,8 @@ function Magasin() {
             alert("Le prix doit être supérieur à 0 $.");
             return;
         }
-
         // Crée un nouvel objet
-        let objet = new Objet($nom, $pOffensive, $pDefensive, $cout);
+        let objet = new ObjetMag($nom, $pOffensive, $pDefensive, $cout);
 
         // Ajoute l'objet à la liste du magasin
         this.listesObjetMag.push(objet);
@@ -69,22 +83,6 @@ function Magasin() {
 }
 
 /**
- * l'objet des magasin
- * @param nomObjet
- * @param puissanObjet
- * @param defenseObjet
- * @param cout
- * @constructor
- */
-// Crée un objet avec ses propriétés
-function ObjetMag(nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0) {
-    this.nom = nomObjet;
-    this.puissanObjet = puissanObjet;
-    this.defenseObjet = defenseObjet;
-    this.cout = parseFloat(cout);
-}
-
-/**
  * Classe personnages
  * @param nom
  * @param attaque
@@ -93,29 +91,49 @@ function ObjetMag(nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0)
  * @param image
  * @constructor
  */
+let listPersonnage = []
 function Personnage(nom, attaque, defense, argent, image){
     this.nomPer = nom;
     this.attaquePer = attaque;
     this.defensePer = defense;
     this.argentPer = parseFloat(argent);
     this.imagePer = image;
-}
+    // une fonction qui affiche les personnages quand on choisi le personnage :
+    //
+    this.affichePer = function (){
+        // les divs d affichage
+        let totalAttaque = $("#totalAttaque")
+        let totalDefensive = $("#totalDefensive")
+        let totalArgent = $("#totalArgent")
+        // Affecter les variables recut a leur place
+        totalAttaque.text(this.attaquePer);
+        totalDefensive.text(this.defensePer);
+        totalArgent.text((this.argentPer).toFixed(2) + " $")
+    }
 
+    this.acheter = function (event) {
+
+
+    }
+}
 /*************************************************************
  *  Main de l'application
  *  **********************************************************
  */
-// Instancier des objets
-let objetMag1 = new ObjetMag("GrosMarteau", "67", "60", 78);
-let objetMag2 = new ObjetMag("Casque", "70", "55", 67);
+
 
 // Instancier un magasin
 let magasin = new Magasin();
 
-//Instancier Personnages :
-let person1 = new Personnage("Jacques le prirate", "12", "5", 350, "img/jack.png");
-let person2 = new Personnage("Luffy", "45", "80", 30000, "img/luffy.png");
+// Instancier des objets
+let objetMag1 = new ObjetMag("GrosMarteau", "67", "60", 78);
+let objetMag2 = new ObjetMag("Casque", "70", "55", 67);
 
+//Instancier Personnages :
+let person1 = new Personnage("personJack", "12", "5", 350, "img/jack.png");
+let person2 = new Personnage("personLuffy", "45", "80", 3000, "img/luffy.png");
+person2.affichePer()
+listPersonnage.push(person1 , person2)
 // Ajouter des objets au magasin
 magasin.listesObjetMag.push(objetMag1, objetMag2);
 
@@ -126,3 +144,17 @@ magasin.afficheObjet();
 $("#btnAjouter").on("click", function () {
     magasin.ajouterObjet();  // Appelle la méthode pour ajouter un objet
 });
+
+// Gestion de l'evenement de l'affiche des personnages.
+$("#lesPersonnages").on("change", function () {
+    let selectedValue = $("#lesPersonnages").val().trim().toLowerCase();
+    for (let element of listPersonnage) {
+        if (String(element.nomPer) === String($("#lesPersonnages").val())) {
+            console.log("Condition satisfaite");
+            element.affichePer();
+            break;
+        }
+
+    }
+});
+
