@@ -1,5 +1,6 @@
 /**
  * l'objet des magasin
+ * @param id
  * @param nomObjet
  * @param puissanObjet
  * @param defenseObjet
@@ -7,11 +8,12 @@
  * @constructor
  */
 // Crée un objet avec ses propriétés
-function ObjetMag(nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0) {
+function ObjetMag(id=0, nomObjet = "", puissanObjet = "", defenseObjet = "", cout = 0) {
     this.nom = nomObjet;
     this.puissanObjet = puissanObjet;
     this.defenseObjet = defenseObjet;
     this.cout = parseFloat(cout);
+    this.id = id
 }
 function Magasin() {
     this.listesObjetMag = [];
@@ -22,9 +24,10 @@ function Magasin() {
         // Récupère le tableau
         const $tableauBody = $("table tbody");
         $tableauBody.empty();  // On vide le tableau physique
-
+        let iD = 0
         // Ajouter chaque objet du magasin dans le tableau
         for (let objet of this.listesObjetMag) {
+            iD++
             // Créer une nouvelle ligne dans le tableau
             const $nouvelleLigne = $("<tr></tr>");
             const $cel0 = $("<td></td>").text(objet.nom);
@@ -33,8 +36,9 @@ function Magasin() {
             const $cel3 = $("<td></td>").text(`${objet.cout.toFixed(2)} $`);
 
             // Ajouter la cellule checkbox
-            const $checkbox = $("<input>").attr("type", "checkbox");
+            const $checkbox = $("<input>").attr("id", `${iD}`).attr("name", "achat").attr("type", "checkbox");
             const $cel4 = $("<td></td>").append($checkbox);
+
 
             // Ajouter la nouvelle ligne au tableau
             $nouvelleLigne.append($cel0, $cel1, $cel2, $cel3, $cel4);
@@ -98,7 +102,7 @@ function Personnage(nom, attaque, defense, argent, image){
     this.defensePer = defense;
     this.argentPer = parseFloat(argent);
     this.imagePer = image;
-    // une fonction qui affiche les personnages quand on choisi le personnage :
+    // une fonction qui affiche les personnages quand on choisi le personnage
     //
     this.affichePer = function (){
         // les divs d affichage
@@ -111,10 +115,27 @@ function Personnage(nom, attaque, defense, argent, image){
         totalArgent.text((this.argentPer).toFixed(2) + " $")
     }
 
-    this.acheter = function (event) {
-
-
+    this.attaqueAcheter = function (objetOffens) {
+        this.attaquePer += objetOffens;
     }
+
+    this.defensiveAcheter = function (objetDeffensive) {
+        this.defensePer += objetDeffensive;
+    }
+
+    this.argentAcheter = function (objetCout) {
+        this.argentPer -= objetCout;
+    }
+
+    // Afficher l'équipement acheter  : créer l'endroit
+    this.afficheObjet = function (ObjetAcheter) {
+        // Select l'endoit ou nous voulons afficher
+        let equipementAffiche  = $(".equipementAffiche")
+        // ajouter une liste dans le div
+        equipementAffiche.append(`<ul>\`${ObjetAcheter}\`</ul>`);
+    }
+
+
 }
 /*************************************************************
  *  Main de l'application
@@ -126,13 +147,14 @@ function Personnage(nom, attaque, defense, argent, image){
 let magasin = new Magasin();
 
 // Instancier des objets
-let objetMag1 = new ObjetMag("GrosMarteau", "67", "60", 78);
-let objetMag2 = new ObjetMag("Casque", "70", "55", 67);
+let objetMag1 = new ObjetMag( 1,"GrosMarteau", "67", "60", 78);
+let objetMag2 = new ObjetMag(2,"Casque", "70", "55", 67);
 
 //Instancier Personnages :
 let person1 = new Personnage("personJack", "12", "5", 350, "img/jack.png");
 let person2 = new Personnage("personLuffy", "45", "80", 3000, "img/luffy.png");
-person2.affichePer()
+person1.affichePer()
+
 listPersonnage.push(person1 , person2)
 // Ajouter des objets au magasin
 magasin.listesObjetMag.push(objetMag1, objetMag2);
@@ -154,7 +176,24 @@ $("#lesPersonnages").on("change", function () {
             element.affichePer();
             break;
         }
-
     }
 });
 
+$("#btnAchat").on("click", function () {
+    // On récupère la personne dans la boucle et le retourner
+    let personActuelle = $("#lesPersonnages").val();
+    let personAchat;
+    let ObjetCout = []
+    for (let person of listPersonnage) {
+        if (personActuelle === person.nomPer) {
+            personAchat = person.nomPer;
+        }
+    }
+    // Récupérer les objet acheter
+    let objets = $("input[name='achat']").checked;
+    for (let objet of objets) {
+        console.log(objet)
+    }
+
+
+})
