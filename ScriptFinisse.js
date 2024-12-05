@@ -187,12 +187,19 @@ $("#btnAchat").on("click", function () {
     for (let person of listPersonnage) {
         if (personActuelle === person.nomPer) {
             personAchat = person.nomPer;
+            console.log(personAchat);
         }
     }
     // Récupérer les objet acheter
-    let objets = $("input[name='achat']").checked;
-    for (let objet of objets) {
-        console.log(objet)
+    let objets = $("input[type='checkbox']");
+    for (let objetClik of objets) {
+        if (objetClik.checked) {
+            console.log("Condition satisfait", objetClik)
+            console.log("Condition satisfait", objetClik.id)
+            // Comparer l'id de l'objet clické au au ID des objet qui se trouve dans la liste d'objet
+            // utiliser un find une méthode Jquery
+        }
+
     }
 
 
