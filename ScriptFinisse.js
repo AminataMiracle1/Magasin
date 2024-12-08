@@ -84,7 +84,8 @@ function Personnage(nom, attaque, defense, argent, image){
         // Select l'endoit ou nous voulons afficher
         let equipementAffiche  = $(".equipementAffiche")
         // ajouter une liste dans le div
-        equipementAffiche.append("<ul>`${ObjetNom}`</ul>`");
+        equipementAffiche.append(`<ul>${ObjetNom}</ul>`);
+
     }
 }
 /*************************************************************
@@ -142,7 +143,7 @@ $("#btnAjouter").on("click", function () {
         }
         // Crée un nouvel objet et son ID
         let ID = 1
-        for (element of magasin.listesObjetMag){
+        for (let element of magasin.listesObjetMag){
             ID++
             console.log("ID", ID)
         }
@@ -153,7 +154,6 @@ $("#btnAjouter").on("click", function () {
         // Affiche les objets mis à jour
         magasin.afficheObjet()
 });
-
 // Gestion de l'evenement de l'affiche des personnages.
 $("#lesPersonnages").on("change", function () {
     for (let element of listPersonnage) {
@@ -219,7 +219,11 @@ $("#btnAchat").on("click", function () {
         personAchat.attaqueAcheter(parseInt(totalAttaque))
         personAchat.defensiveAcheter(parseInt(totalDeff))
         personAchat.argentAcheter(parseInt(totalCout))
-        personAchat.afficheObjet(objetRecup.nom) // erreur
+        // Afficher les équipement acheter
+        for (let objetNom of objetRecup){
+            console.log("nom", objetNom.nom )
+            personAchat.afficheObjet(objetNom.nom)
+        }
         // Afficher les nouvelles stats
         personAchat.affichePer()
         // Supprimer les objets achetés du magasin utilise filter et includes on supprimes tout les
