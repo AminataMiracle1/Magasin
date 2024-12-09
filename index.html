@@ -68,10 +68,10 @@
             <div class="col-md-12 mx-auto">
                 <label for="nomObjet" class="form-label">Nom :</label>
                 <input type="text" id="nomObjet" class="form-control" name="Nom" minlength="3" maxlength="30" required>
-                <div class="valid-tooltip">
+                <div class="valid-feedback text-light" id="nomValide">
                     Looks good!
                 </div>
-                <div  class="invalid-tooltip nomObj">
+                <div  class="invalid-feedback nomObj">
                     Le nom doit être supérieur à 3 caractères.
                 </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="col-md-12 mx-auto">
                 <label for="pOffensive" class="form-label">Puissance Offensive :</label>
                 <input type="number" id="pOffensive" class="form-control" name="Puissance Offensive" min="50" max="100" placeholder="min 50 max 100" required>
-                <div class="valid-feedback">
+                <div class="valid-feedback text-light" id="offensValid">
                     Looks good!
                 </div>
                 <div class="invalid-feedback offenseObj">
@@ -92,7 +92,7 @@
             <div class="col-md-12 mx-auto">
                 <label for="pDefensive" class="form-label">Puissance Défensive :</label>
                 <input type="number" id="pDefensive" class="form-control" name="Puissance défensive" min="50" max="100" placeholder="min 50 max 100" required>
-                <div class="valid-feedback">
+                <div class="valid-feedback text-light" id="deffValid">
                     Looks good!
                 </div>
                 <div class="invalid-feedback deffObj">
@@ -104,7 +104,7 @@
             <div class="col-md-12 mx-auto">
                 <label for="cout" class="form-label">Coût :</label>
                 <input type="number" id="cout" class="form-control" name="Cout" min="0">
-                <div class="valid-feedback">
+                <div class="valid-feedback text-light" id="coutValid">
                     Looks good!
                 </div>
                 <div class="invalid-feedback coutObj">

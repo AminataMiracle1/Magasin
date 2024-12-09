@@ -130,21 +130,28 @@ $("#btnAjouter").on("click", function (event) {
     if ($nom.length < 3) {
         console.log("Le nom doit être supérieur à 3 caractères.")
         $(".nomObj").show();
-        return;
+    }
+    else{
+        $("#nomValide").show()
     }
     if ($pOffensive < 50 || $pOffensive > 100) {
         console.log("La puissance offensive doit être entre 50 et 100.");
         $(".offenseObj").show()
+    }else{
+        $("#offensValid").show()
     }
     if ($pDefensive < 50 || $pDefensive > 100) {
         console.log("La puissance défensive doit être entre 50 et 100.");
         $(".deffObj").show()
-        return;
+    }
+    else{
+        $("#deffValid").show()
     }
     if ($cout <= 0) {
         console.log("Le prix doit être supérieur à 0 $.");
         $(".coutObj").show()
-        return;
+    }else{
+        $("#coutValid").show()
     }
     // Crée un nouvel objet et son ID
     let ID = 1
