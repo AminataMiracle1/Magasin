@@ -47,10 +47,10 @@ Formulaire
  */
 form{
     width: 40%;
-    border:solid green 2px;
+    border:solid white 2px;
     border-radius: 10px;
-    background-color: green;
-    color: white;
+    background-color: gray ;
+    color: black;
 }
 
 label  {

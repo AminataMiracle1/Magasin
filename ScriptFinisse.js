@@ -114,57 +114,65 @@ magasin.listesObjetMag.push(objetMag1, objetMag2, objetMag3, objetMag4);
 magasin.afficheObjet();
 
 // Gestion de l'événement pour le bouton Ajouter
-$("#btnAjouter").on("click", function () {
+$("#btnAjouter").on("click", function (event) {
     /**
      * Ajouter un objet au magasin
      */
-        // Récupère les valeurs du formulaire
-        let $nom = $("#nomObjet").val();
-        let $pOffensive = $("#pOffensive").val();
-        let $pDefensive = $("#pDefensive").val();
-        let $cout = parseFloat($("#cout").val()).toFixed(2);
+    event.preventDefault()
 
-        // Vérification simple des champs (validez les données ici)
-        if ($nom.length < 3) {
-            alert("Le nom doit être supérieur à 3 caractères.");
-            return;
-        }
-        if ($pOffensive < 50 || $pOffensive > 100) {
-            alert("La puissance offensive doit être entre 50 et 100.");
-            return;
-        }
-        if ($pDefensive < 50 || $pDefensive > 100) {
-            alert("La puissance défensive doit être entre 50 et 100.");
-            return;
-        }
-        if ($cout <= 0) {
-            alert("Le prix doit être supérieur à 0 $.");
-            return;
-        }
-        // Crée un nouvel objet et son ID
-        let ID = 1
-        for (let element of magasin.listesObjetMag){
-            ID++
-            console.log("ID", ID)
-        }
-        let objet = new ObjetMag(ID,$nom, $pOffensive, $pDefensive, $cout);
-        // Ajoute l'objet à la liste du magasin
-        magasin.listesObjetMag.push(objet);
-        console.log("Liste des objets :", magasin.listesObjetMag);
-        // Affiche les objets mis à jour
-        magasin.afficheObjet()
+    // Récupère les valeurs du formulaire
+    let $nom = $("#nomObjet").val();
+    let $pOffensive = $("#pOffensive").val();
+    let $pDefensive = $("#pDefensive").val();
+    let $cout = parseFloat($("#cout").val()).toFixed(2);
+
+    // Vérification simple des champs (validez les données ici)
+    if ($nom.length < 3) {
+        console.log("Le nom doit être supérieur à 3 caractères.")
+        $(".nomObj").show();
+        return;
+    }
+    if ($pOffensive < 50 || $pOffensive > 100) {
+        console.log("La puissance offensive doit être entre 50 et 100.");
+        $(".offenseObj").show()
+    }
+    if ($pDefensive < 50 || $pDefensive > 100) {
+        console.log("La puissance défensive doit être entre 50 et 100.");
+        $(".deffObj").show()
+        return;
+    }
+    if ($cout <= 0) {
+        console.log("Le prix doit être supérieur à 0 $.");
+        $(".coutObj").show()
+        return;
+    }
+    // Crée un nouvel objet et son ID
+    let ID = 1
+    for (let element of magasin.listesObjetMag){
+        ID++
+        console.log("ID", ID)
+    }
+    let objet = new ObjetMag(ID,$nom, $pOffensive, $pDefensive, $cout);
+    // Ajoute l'objet à la liste du magasin
+    magasin.listesObjetMag.push(objet);
+    console.log("Liste des objets :", magasin.listesObjetMag);
+    // Affiche les objets mis à jour
+    magasin.afficheObjet()
 });
 // Gestion de l'evenement de l'affiche des personnages.
 $("#lesPersonnages").on("change", function () {
-    for (let element of listPersonnage) {
+    // à vrai dire je peux utiliser ici find
+    /*
+        for (let element of listPersonnage) {
         if (String(element.nomPer) === String($("#lesPersonnages").val())) {
-            console.log("Condition satisfaite");
             element.affichePer();
             break;
         }
     }
+     */
+    let personAff = listPersonnage.find(person => person.nomPer ===String($("#lesPersonnages").val()))
+    personAff.affichePer()
 });
-
 /**
  * Une fonction qui récupère la personne qui achete
  */
@@ -174,7 +182,6 @@ function personAchete() {
     let personAchat = listPersonnage.find(person => person.nomPer === personActuelle)
     return personAchat
 }
-
 /**
  * Une fonctionne qui récupère les objets acheter
  */
