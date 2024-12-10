@@ -59,16 +59,29 @@ function Personnage(nom, attaque, defense, argent, image){
     this.defensePer = parseInt(defense) ;
     this.argentPer = parseFloat(argent);
     this.imagePer = image;
+    this.equipements = []
     // une fonction qui affiche les personnages quand on choisi le personnage
     this.affichePer = function (){
         // les divs d affichage
         let totalAttaque = $("#totalAttaque")
         let totalDefensive = $("#totalDefensive")
         let totalArgent = $("#totalArgent")
+        let imgPers = $("#imagePerson")
         // Affecter les variables recut a leur place
         totalAttaque.text(this.attaquePer);
         totalDefensive.text(this.defensePer);
         totalArgent.text((this.argentPer).toFixed(2) + " $")
+        imgPers.attr("src", this.imagePer)
+    }
+    // Afficher l'équipement acheter  : créer l'endroit
+    this.afficheObjet = function () {
+        // Select l'endoit ou nous voulons afficher
+        let equipementAffiche  = $("#equipementAffiche")
+        equipementAffiche.empty(); // nous vidons le tag html avant de réafficher.
+        for(let element of this.equipements) {
+            // ajouter une liste dans le div
+            equipementAffiche.append(`<li>${element}</li>`);
+        }
     }
     this.attaqueAcheter = function (objetOffens) {
         this.attaquePer = parseInt(this.attaquePer) + objetOffens;
@@ -79,14 +92,7 @@ function Personnage(nom, attaque, defense, argent, image){
     this.argentAcheter = function (objetCout) {
         this.argentPer = this.argentPer - objetCout;
     }
-    // Afficher l'équipement acheter  : créer l'endroit
-    this.afficheObjet = function (ObjetNom) {
-        // Select l'endoit ou nous voulons afficher
-        let equipementAffiche  = $(".equipementAffiche")
-        // ajouter une liste dans le div
-        equipementAffiche.append(`<ul>${ObjetNom}</ul>`);
 
-    }
 }
 /*************************************************************
  *  Main de l'application
@@ -102,8 +108,8 @@ let objetMag3 = new ObjetMag(3, "Marteau", 97, 62, 98);
 let objetMag4 = new ObjetMag(4, "Épée", 87, 40, 28);
 
 //Instancier Personnages :
-let person1 = new Personnage("personJack", 12, 5, 350, "img/jack.png");
-let person2 = new Personnage("personLuffy", 45, 80, 3000, "img/luffy.png");
+let person1 = new Personnage("personJack", 12, 5, 350, "img/Jacques le pirate.png");
+let person2 = new Personnage("personLuffy", 45, 80, 3000, "img/rey la jedi.jpg");
 person1.affichePer()
 
 listPersonnage.push(person1 , person2)
@@ -113,27 +119,41 @@ magasin.listesObjetMag.push(objetMag1, objetMag2, objetMag3, objetMag4);
 // Afficher les objets du magasin
 magasin.afficheObjet();
 
+// Validation du form
+function formValidation(){
+    // Récupère les valeurs du formulaire
+    let $nom = $("#nomObjet")
+    let $pOffensive = $("#pOffensive")
+    let $pDefensive = $("#pDefensive")
+    let $cout = $("#cout")
+
+    $nom.blur(function (){
+        alert("Hello")
+        // Vérification simple des champs (validez les données ici)
+        if ($nom.length < 3) {
+            console.log("Le nom doit être supérieur à 3 caractères.")
+            $(".nomObj").show();
+        }
+        else{
+            $("#nomValide").show()
+        }
+    })
+}
+
 // Gestion de l'événement pour le bouton Ajouter
 $("#btnAjouter").on("click", function (event) {
     /**
      * Ajouter un objet au magasin
      */
     event.preventDefault()
-
     // Récupère les valeurs du formulaire
     let $nom = $("#nomObjet").val();
     let $pOffensive = $("#pOffensive").val();
     let $pDefensive = $("#pDefensive").val();
     let $cout = parseFloat($("#cout").val()).toFixed(2);
 
-    // Vérification simple des champs (validez les données ici)
-    if ($nom.length < 3) {
-        console.log("Le nom doit être supérieur à 3 caractères.")
-        $(".nomObj").show();
-    }
-    else{
-        $("#nomValide").show()
-    }
+    formValidation();
+
     if ($pOffensive < 50 || $pOffensive > 100) {
         console.log("La puissance offensive doit être entre 50 et 100.");
         $(".offenseObj").show()
@@ -178,7 +198,8 @@ $("#lesPersonnages").on("change", function () {
     }
      */
     let personAff = listPersonnage.find(person => person.nomPer ===String($("#lesPersonnages").val()))
-    personAff.affichePer()
+    personAff.affichePer();
+    personAff.afficheObjet();
 });
 /**
  * Une fonction qui récupère la personne qui achete
@@ -233,11 +254,12 @@ $("#btnAchat").on("click", function () {
         personAchat.attaqueAcheter(parseInt(totalAttaque))
         personAchat.defensiveAcheter(parseInt(totalDeff))
         personAchat.argentAcheter(parseInt(totalCout))
-        // Afficher les équipement acheter
+        // Maintenant il faut ajouter le nom des objet dans la lis
         for (let objetNom of objetRecup){
             console.log("nom", objetNom.nom )
-            personAchat.afficheObjet(objetNom.nom)
+            personAchat.equipements.push(objetNom.nom)
         }
+        personAchat.afficheObjet()
         // Afficher les nouvelles stats
         personAchat.affichePer()
         // Supprimer les objets achetés du magasin utilise filter et includes on supprimes tout les
