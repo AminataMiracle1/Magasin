@@ -102,10 +102,10 @@ function Personnage(nom, attaque, defense, argent, image){
 let magasin = new Magasin();
 
 // Instancier des objets
-let objetMag1 = new ObjetMag(1, "GrosMarteau", 56, 60, 80);
+/*let objetMag1 = new ObjetMag(1, "GrosMarteau", 56, 60, 80);
 let objetMag2 = new ObjetMag(2, "Casque", 69, 80, 88);
 let objetMag3 = new ObjetMag(3, "Marteau", 97, 62, 98);
-let objetMag4 = new ObjetMag(4, "Épée", 87, 40, 28);
+let objetMag4 = new ObjetMag(4, "Épée", 87, 40, 28);*/
 
 //Instancier Personnages :
 let person1 = new Personnage("personJack", 12, 5, 350, "img/Jacques le pirate.png");
@@ -114,34 +114,11 @@ person1.affichePer()
 
 listPersonnage.push(person1 , person2)
 // Ajouter des objets au magasin
-magasin.listesObjetMag.push(objetMag1, objetMag2, objetMag3, objetMag4);
+//magasin.listesObjetMag.push(objetMag1, objetMag2, objetMag3, objetMag4);
 
 // Afficher les objets du magasin
 magasin.afficheObjet();
 
-// Validation du form
-function formValidation(){
-    // Récupère les valeurs du formulaire
-    let $nom = $("#nomObjet")
-    let $pOffensive = $("#pOffensive")
-    let $pDefensive = $("#pDefensive")
-    let $cout = $("#cout")
-
-    $nom.blur(function (){
-        alert(Hello)
-        // Vérification simple des champs (validez les données ici)
-        if ($nom.length < 3) {
-            console.log("Le nom doit être supérieur à 3 caractères.")
-            $(".nomObj").show();
-        }
-        else{
-            $("#nomValide").show()
-        }
-    })
-}
-$("#nomObjet").on("click", function () {
-    $("#nomObjet").addClass("valid");
-})
 // Gestion de l'événement pour le bouton Ajouter
 $("#btnAjouter").on("click", function (event) {
     /**
@@ -273,5 +250,35 @@ $("#btnAchat").on("click", function () {
         // afficher le tableau
         magasin.afficheObjet()
     }
+})
 
+////////////////////////////////////////// Intégration de la synchronisation Ajax //////////////////////////////////////////
+// Une fonction qui cree un un objet;
+function createObjetMagasin(listDonneObjet){
+    return new ObjetMag(listDonneObjet.id, listDonneObjet.nom,  listDonneObjet.puissanObjet, listDonneObjet.defenseObjet, listDonneObjet.cout);
+}
+
+fetch('https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin', {
+    method: 'GET',
+    headers: {'content-type':'application/json'},
+}).then(res => {
+    // Récuperer les objets du server
+    if (!res.ok) {
+        throw new Error("Je trouve les element")
+    }
+    // handle error
+}).then(objetMock => {
+        console.log("sdagfgshj", objetMock);
+
+        // nous transformons donné recu en des objets magasin puis les ajouter dans la listes magasin
+/*
+        for (let objet of objetMock) {
+            let obj = new ObjetMag( objet.id, objet.nom, objet.defenseObjet, objet.puissanObjet, objet.cout);
+            magasin.listesObjetMag.push(obj);
+        }
+*/
+
+}).catch(error => {
+    // handle error
+    console.error(error);
 })
