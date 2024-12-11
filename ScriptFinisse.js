@@ -1,3 +1,5 @@
+const API = 'https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin'
+
 /**
  * l'objet des magasin
  * @param id
@@ -118,56 +120,62 @@ listPersonnage.push(person1 , person2)
 
 // Afficher les objets du magasin
 magasin.afficheObjet();
+/**
+ * Ajouter un objet au magasin
+ */
+function btnAjouter() {
+    // Gestion de l'événement pour le bouton Ajouter
+    $("#btnAjouter").on("click", function (event) {
+        event.preventDefault()
+        // Récupère les valeurs du formulaire
+        let $nom = $("#nomObjet").val();
+        let $pOffensive = $("#pOffensive").val();
+        let $pDefensive = $("#pDefensive").val();
+        let $cout = parseFloat($("#cout").val()).toFixed(2);
 
-// Gestion de l'événement pour le bouton Ajouter
-$("#btnAjouter").on("click", function (event) {
-    /**
-     * Ajouter un objet au magasin
-     */
-    event.preventDefault()
-    // Récupère les valeurs du formulaire
-    let $nom = $("#nomObjet").val();
-    let $pOffensive = $("#pOffensive").val();
-    let $pDefensive = $("#pDefensive").val();
-    let $cout = parseFloat($("#cout").val()).toFixed(2);
 
-    // Vérification simple des champs (validez les données ici)
-    if ($nom.length < 3) {
-        $(".nomObj").show();
-    }
-    else{
-        $("#nomValide").show()
-    }
-    if ($pOffensive < 50 || $pOffensive > 100) {
-        $(".offenseObj").show()
-    }else{
-        $("#offensValid").show()
-    }
-    if ($pDefensive < 50 || $pDefensive > 100) {
+        // Vérification simple des champs (validez les données ici)
+        if ($nom.length < 3) {
+            $(".nomObj").show();
+        }
+        else{
+            $("#nomValide").show()
+        }
+        if ($pOffensive < 50 || $pOffensive > 100) {
+            $(".offenseObj").show()
+        }else{
+            $("#offensValid").show()
+        }
+        if ($pDefensive < 50 || $pDefensive > 100) {
 
-        $(".deffObj").show()
-    }
-    else{
-        $("#deffValid").show()
-    }
-    if ($cout <= 0) {
-        $("#coutValid").show()
-    }else{
-        $(".coutObj").show()
-    }
-    // Crée un nouvel objet et son ID
-    let ID = 1
-    for (let element of magasin.listesObjetMag){
-        ID++
-        console.log("ID", ID)
-    }
-    let objet = new ObjetMag(ID,$nom, $pOffensive, $pDefensive, $cout);
-    // Ajoute l'objet à la liste du magasin
-    magasin.listesObjetMag.push(objet);
-    console.log("Liste des objets :", magasin.listesObjetMag);
-    // Affiche les objets mis à jour
-    magasin.afficheObjet()
-});
+            $(".deffObj").show()
+        }
+        else{
+            $("#deffValid").show()
+        }
+        if ($cout <= 0) {
+            $("#coutValid").show()
+        }else{
+            $(".coutObj").show()
+        }
+        // Crée un nouvel objet et son ID
+        let ID = 1
+        for (let element of magasin.listesObjetMag){
+            ID++
+            console.log("ID", ID)
+        }
+
+        let objet = new ObjetMag(ID, $nom, $pOffensive, $pDefensive, $cout);
+        // Ajoute l'objet à la liste du magasin
+        magasin.listesObjetMag.push(objet);
+        requettePost(objet)
+        console.log("Liste des objets :", magasin.listesObjetMag);
+        // Affiche les objets mis à jour
+        magasin.afficheObjet()
+    });
+}
+btnAjouter()
+
 // Gestion de l'evenement de l'affiche des personnages.
 $("#lesPersonnages").on("change", function () {
     // à vrai dire je peux utiliser ici find
@@ -256,15 +264,14 @@ $("#btnAchat").on("click", function () {
 // Une fonction qui cree un un objet;
 function createObjetMagasin(objet){
     console.log("TEST", objet.nomObjet)
-    let obj = new ObjetMag(objet.noObjet, objet.nomObjet, objet.offensive, objet.defensive, objet.cout);
+    let obj = new ObjetMag(objet.noObjet, objet.nomObjet, objet.puissanObjet, objet.defenseObjet, objet.cout);
     return obj
 }
 /**
 Asynchrone pour recevoir les données
  */
-
 function requetteGet(){
-    fetch('https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin', {
+    fetch(API, {
         method: 'GET',
         headers: {'content-type':'application/json'},
     }).then(res => {
@@ -292,7 +299,21 @@ requetteGet()
 /**
  * Méthode pour ajouter des donnés dans le serveur utiliser La fonction ajouter.
  */
-function requettePost(){
-
+function requettePost(fichierJson){
+    fetch(API, {
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        // Send your data in the request body as JSON
+        body: JSON.stringify(fichierJson)
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error("Peut pas écrire sur serveur")
+        }else{
+            return res.json();
+        }
+    }).catch(error => {
+        // handle error
+        console.error(error);
+    })
 }
 
