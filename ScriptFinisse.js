@@ -5,16 +5,16 @@
  * @param puissanObjet
  * @param defenseObjet
  * @param cout
- * @constructor
  */
 // Crée un objet avec ses propriétés
-function ObjetMag(id = 0, nomObjet = "", puissanObjet = 0, defenseObjet = 0, cout = 0) {
+function ObjetMag(id = 0, nomObjet= "", puissanObjet = 0, defenseObjet = 0, cout = 0) {
+    this.id = id;
     this.nom = nomObjet;
     this.puissanObjet = parseFloat(puissanObjet);
     this.defenseObjet = parseFloat(defenseObjet);
     this.cout = parseFloat(cout);
-    this.id = id;
 }
+
 function Magasin() {
     this.listesObjetMag = [];
     /**
@@ -254,31 +254,45 @@ $("#btnAchat").on("click", function () {
 
 ////////////////////////////////////////// Intégration de la synchronisation Ajax //////////////////////////////////////////
 // Une fonction qui cree un un objet;
-function createObjetMagasin(listDonneObjet){
-    return new ObjetMag(listDonneObjet.id, listDonneObjet.nom,  listDonneObjet.puissanObjet, listDonneObjet.defenseObjet, listDonneObjet.cout);
+function createObjetMagasin(objet){
+    console.log("TEST", objet.nomObjet)
+    let obj = new ObjetMag(objet.noObjet, objet.nomObjet, objet.offensive, objet.defensive, objet.cout);
+    return obj
+}
+/**
+Asynchrone pour recevoir les données
+ */
+
+function requetteGet(){
+    fetch('https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin', {
+        method: 'GET',
+        headers: {'content-type':'application/json'},
+    }).then(res => {
+        // Récuperer les objets du server
+        if (!res.ok) {
+            throw new Error("Je ne trouve pas les elements")
+        }else {
+            return res.json()
+        }
+        // handle error
+    }).then(objetMock => {
+        console.log("sdagfgshj", objetMock);
+        // nous transformons donné recu en des objets magasin puis les ajouter dans la listes magasin
+        for (let objet of objetMock) {
+            magasin.listesObjetMag.push(createObjetMagasin(objet));
+        }
+        magasin.afficheObjet();
+
+    }).catch(error => {
+        // handle error
+        console.error(error);
+    })
+}
+requetteGet()
+/**
+ * Méthode pour ajouter des donnés dans le serveur utiliser La fonction ajouter.
+ */
+function requettePost(){
+
 }
 
-fetch('https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin', {
-    method: 'GET',
-    headers: {'content-type':'application/json'},
-}).then(res => {
-    // Récuperer les objets du server
-    if (!res.ok) {
-        throw new Error("Je trouve les element")
-    }
-    // handle error
-}).then(objetMock => {
-        console.log("sdagfgshj", objetMock);
-
-        // nous transformons donné recu en des objets magasin puis les ajouter dans la listes magasin
-/*
-        for (let objet of objetMock) {
-            let obj = new ObjetMag( objet.id, objet.nom, objet.defenseObjet, objet.puissanObjet, objet.cout);
-            magasin.listesObjetMag.push(obj);
-        }
-*/
-
-}).catch(error => {
-    // handle error
-    console.error(error);
-})
