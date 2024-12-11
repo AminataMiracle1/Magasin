@@ -1,6 +1,44 @@
 const API = 'https://67471d4e38c8741641d575cd.mockapi.io/objetMagasin'
 
 /**
+ * Classe personnages
+ * @param nom
+ * @param attaque
+ * @param defense
+ * @param argent
+ * @param image
+ * @constructor
+ */
+let listPersonnage = []
+function Personnage(nom, attaque, defense, argent, image){
+    this.nomPer = nom;
+    this.attaquePer = parseInt(attaque);
+    this.defensePer = parseInt(defense) ;
+    this.argentPer = parseFloat(argent);
+    this.imagePer = image;
+    this.equipements = []
+
+    // Afficher l'équipement acheter  : créer l'endroit
+    this.afficheObjet = function () {
+        // Select l'endoit ou nous voulons afficher
+        let equipementAffiche  = $("#equipementAffiche")
+        equipementAffiche.empty(); // nous vidons le tag html avant de réafficher.
+        for(let element of this.equipements) {
+            // ajouter une liste dans le div
+            equipementAffiche.append(`<li>${element}</li>`);
+        }
+    }
+    this.attaqueAcheter = function (objetOffens) {
+        this.attaquePer = parseInt(this.attaquePer) + objetOffens;
+    }
+    this.defensiveAcheter = function (objetDeffensive) {
+        this.defensePer = parseInt(this.defensePer) + objetDeffensive;
+    }
+    this.argentAcheter = function (objetCout) {
+        this.argentPer = this.argentPer - objetCout;
+    }
+}
+/**
  * l'objet des magasin
  * @param id
  * @param nomObjet
@@ -45,61 +83,45 @@ function Magasin() {
         }
     };
 }
-/**
- * Classe personnages
- * @param nom
- * @param attaque
- * @param defense
- * @param argent
- * @param image
- * @constructor
- */
-let listPersonnage = []
-function Personnage(nom, attaque, defense, argent, image){
-    this.nomPer = nom;
-    this.attaquePer = parseInt(attaque);
-    this.defensePer = parseInt(defense) ;
-    this.argentPer = parseFloat(argent);
-    this.imagePer = image;
-    this.equipements = []
-    // une fonction qui affiche les personnages quand on choisi le personnage
-    this.affichePer = function (){
-        // les divs d affichage
-        let totalAttaque = $("#totalAttaque")
-        let totalDefensive = $("#totalDefensive")
-        let totalArgent = $("#totalArgent")
-        let imgPers = $("#imagePerson")
-        // Affecter les variables recut a leur place
-        totalAttaque.text(this.attaquePer);
-        totalDefensive.text(this.defensePer);
-        totalArgent.text((this.argentPer).toFixed(2) + " $")
-        imgPers.attr("src", this.imagePer)
-    }
-    // Afficher l'équipement acheter  : créer l'endroit
-    this.afficheObjet = function () {
-        // Select l'endoit ou nous voulons afficher
-        let equipementAffiche  = $("#equipementAffiche")
-        equipementAffiche.empty(); // nous vidons le tag html avant de réafficher.
-        for(let element of this.equipements) {
-            // ajouter une liste dans le div
-            equipementAffiche.append(`<li>${element}</li>`);
-        }
-    }
-    this.attaqueAcheter = function (objetOffens) {
-        this.attaquePer = parseInt(this.attaquePer) + objetOffens;
-    }
-    this.defensiveAcheter = function (objetDeffensive) {
-        this.defensePer = parseInt(this.defensePer) + objetDeffensive;
-    }
-    this.argentAcheter = function (objetCout) {
-        this.argentPer = this.argentPer - objetCout;
-    }
 
-}
 /*************************************************************
  *  Main de l'application
  *  **********************************************************
  */
+
+// une fonction qui affiche les personnages quand on choisi le personnage
+function afficherPersonnage (Personnage) {
+    // Récupere la ou je veut ajouter
+    let totalAttaque = $("#totalAttaque")
+    let totalDefensive = $("#totalDefensive")
+    let totalArgent = $("#totalArgent")
+    let imgPers = $("#imagePerson")
+    // Affecter les variables recut a leur place
+    totalAttaque.text(Personnage.attaquePer);
+    totalDefensive.text(Personnage.defensePer);
+    totalArgent.text((Personnage.argentPer).toFixed(2) + " $")
+    imgPers.attr("src", Personnage.imagePer)
+
+}
+function storagePersonnage (Personnage) {
+    //mettre en mémoir personnage
+    localStorage.setItem();
+}
+// Gestion de l'evenement de l'affiche des personnages.
+$("#lesPersonnages").on("change", function () {
+    // à vrai dire je peux utiliser ici find
+    /*
+        for (let element of listPersonnage) {
+        if (String(element.nomPer) === String($("#lesPersonnages").val())) {
+            element.affichePer();
+            break;
+        }
+    }
+     */
+    let personAff = listPersonnage.find(person => person.nomPer ===String($("#lesPersonnages").val()))
+    personAff.affichePer();
+    personAff.afficheObjet();
+});
 // Instancier un magasin
 let magasin = new Magasin();
 
@@ -132,8 +154,6 @@ function btnAjouter() {
         let $pOffensive = $("#pOffensive").val();
         let $pDefensive = $("#pDefensive").val();
         let $cout = parseFloat($("#cout").val()).toFixed(2);
-
-
         // Vérification simple des champs (validez les données ici)
         if ($nom.length < 3) {
             $(".nomObj").show();
@@ -164,10 +184,10 @@ function btnAjouter() {
             ID++
             console.log("ID", ID)
         }
-
         let objet = new ObjetMag(ID, $nom, $pOffensive, $pDefensive, $cout);
         // Ajoute l'objet à la liste du magasin
         magasin.listesObjetMag.push(objet);
+        // Appeller la méthode post et ajouter la nouvelle objet dans le server
         requettePost(objet)
         console.log("Liste des objets :", magasin.listesObjetMag);
         // Affiche les objets mis à jour
@@ -176,21 +196,6 @@ function btnAjouter() {
 }
 btnAjouter()
 
-// Gestion de l'evenement de l'affiche des personnages.
-$("#lesPersonnages").on("change", function () {
-    // à vrai dire je peux utiliser ici find
-    /*
-        for (let element of listPersonnage) {
-        if (String(element.nomPer) === String($("#lesPersonnages").val())) {
-            element.affichePer();
-            break;
-        }
-    }
-     */
-    let personAff = listPersonnage.find(person => person.nomPer ===String($("#lesPersonnages").val()))
-    personAff.affichePer();
-    personAff.afficheObjet();
-});
 /**
  * Une fonction qui récupère la personne qui achete
  */

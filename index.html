@@ -14,7 +14,23 @@
 </head>
 <body>
 <div class="container">
+        <!-- Personnage fonction comme la carte -->
+        <div class="sectionPerson col-12 col-lg-6 ">
+            <h2>Personnages</h2>
+            <div><img id="imagePerson" src="" alt="Personnage" class="img-fluid rounded"></div>
+            <select name="Personnages" id="lesPersonnages">
+                <option value="personJack" >Jacque le pirate</option>
+                <option value="personLuffy">Luffy</option>
+            </select>
+            <div id=affichePerson>
+                <div id="attaquePerson"> Attaque : <span id="totalAttaque"></span></div>
+                <div id="defensePerson"> Défense : <span id="totalDefensive"></span></div>
+                <div id="argentPerson"> Argent   : <span id="totalArgent">$</span></div>
+                <div class="equipementAffiche"><ul id="equipementAffiche"></ul></div>
+            </div>
 
+        </div>
+    </div>
 
     <!--
     Nous avons trois section sur cette page 1- Magasin 2- formulaire ajout -3 personage
@@ -40,31 +56,16 @@
                 <p>Merci de votre achat <button id="btnAchat" class="btn btn-primary">Acheter</button></p>
             </div>
         </div>
-        <!-- Personnage fonction comme la carte -->
-        <div class="sectionPerson col-12 col-lg-6 ">
-            <h2>Personnages</h2>
-            <select name="Personnages" id="lesPersonnages">
-                <option value="personJack" >Jacque le pirate</option>
-                <option value="personLuffy">Luffy</option>
-            </select>
-            <div id=affichePerson>
-                <div id="attaquePerson"> Attaque : <span id="totalAttaque"></span></div>
-                <div id="defensePerson"> Défense : <span id="totalDefensive"></span></div>
-                <div id="argentPerson"> Argent   : <span id="totalArgent">$</span></div>
-                <div class="equipementAffiche"><ul id="equipementAffiche"></ul></div>
-            </div>
-            <div><img id="imagePerson" src="" alt="Personnage" class="img-fluid rounded"></div>
-        </div>
-    </div>
+
     <!-- Formulaire ajout -->
-    <section class="container my-5">
-        <form action="" method="GET" class="needs-validation was-validated row g-3" novalidate>
+    <section class=" my-5">
+        <form action="" method="GET" class="g-3" novalidate>
             <h2 class="text-center mb-4">Ajouter un objet au magasin</h2>
 
             <!-- Nom de l'objet -->
-            <div class="col-md-12 mx-auto">
-                <label for="nomObjet" class="form-label">Nom :</label>
-                <input type="text" id="nomObjet" class="form-control" name="Nom" minlength="3" maxlength="30" required>
+            <div class="row mx-auto">
+                <label for="nomObjet" class="form-label col-md-6">Nom :</label>
+                <input type="text" id="nomObjet" class="form-control col-md-6" name="Nom" minlength="3" maxlength="30" required>
                 <div class="valid-feedback text-light" id="nomValide">
                     Looks good!
 
@@ -75,9 +76,9 @@
             </div>
 
             <!-- Puissance Offensive -->
-            <div class="col-md-12 mx-auto">
-                <label for="pOffensive" class="form-label">Puissance Offensive :</label>
-                <input type="number" id="pOffensive" class="form-control" name="Puissance Offensive" min="50" max="100" placeholder="min 50 max 100" required>
+            <div class="row mx-auto">
+                <label for="pOffensive" class="form-label col-md-6 ">Puissance Offensive :</label>
+                <input type="number" id="pOffensive" class="form-control col-md-6" name="Puissance Offensive" min="50" max="100" placeholder="min 50 max 100" required>
                 <div class="valid-feedback text-light" id="offensValid">
                     Looks good!
                 </div>
@@ -87,9 +88,9 @@
             </div>
 
             <!-- Puissance Défensive -->
-            <div class="col-md-12 mx-auto">
-                <label for="pDefensive" class="form-label">Puissance Défensive :</label>
-                <input type="number" id="pDefensive" class="form-control" name="Puissance défensive" min="50" max="100" placeholder="min 50 max 100" required>
+            <div class="row mx-auto">
+                <label for="pDefensive" class="form-label col-md-6">Puissance Défensive :</label>
+                <input type="number" id="pDefensive" class="form-control col-md-6" name="Puissance défensive" min="50" max="100" placeholder="min 50 max 100" required>
                 <div class="valid-feedback text-light" id="deffValid">
                     Looks good!
                 </div>
@@ -99,9 +100,9 @@
             </div>
 
             <!-- Coût -->
-            <div class="col-md-12 mx-auto">
-                <label for="cout" class="form-label">Coût :</label>
-                <input type="number" id="cout" class="form-control" name="Cout" min="0">
+            <div class="row mx-auto">
+                <label for="cout" class="form-label col-md-6">Coût :</label>
+                <input type="number" id="cout" class="form-control col-md-6" name="Cout" min="0">
                 <div class="valid-feedback text-light" id="coutValid">
                     Looks good!
                 </div>
